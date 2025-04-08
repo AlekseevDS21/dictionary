@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  cambridge-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cambridge-api
+    ports:
+      - "8000:8000"
+    networks:
+      - app-network
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+
+  telegram-bot:
+    build:
+      context: .
+      dockerfile: Dockerfile.bot
+    container_name: cambridge-bot
+    environment:
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - API_HOST=cambridge-api
+      - API_PORT=8000
+    depends_on:
+      - cambridge-api
+    networks:
+      - app-network
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge

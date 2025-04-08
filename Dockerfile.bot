@@ -1,0 +1,11 @@
+FROM python:3.9-slim
+
+WORKDIR /app
+
+COPY ./telegram_bot /app/
+
+# Убедимся, что requirements.txt скопирован и доступен
+RUN ls -la && \
+    pip install --no-cache-dir -r requirements.txt
+
+CMD ["python", "bot.py"]
