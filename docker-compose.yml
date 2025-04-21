@@ -23,6 +23,9 @@ services:
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
       - API_HOST=cambridge-api
       - API_PORT=8000
+      - UNSPLASH_ACCESS_KEY=${UNSPLASH_ACCESS_KEY}
+    volumes:
+      - ./.env:/app/.env
     depends_on:
       - cambridge-api
     networks:
